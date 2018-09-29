@@ -1,4 +1,8 @@
 *{margin: 0;padding: 0;}
+body{
+	background-image: url(./wall.jpg);
+	background: cover;
+}
 a{text-align: none;}
 kbd{
 	border: 1px solid red;
@@ -10,22 +14,61 @@ kbd{
 }
 kbd>button{
 	position: absolute;
-	right: 0;
-	bottom: 0;
+	left: 0;
+	top: 0;
 	display: none;
 }
 kbd:hover >button{
 	display: block
 }
 main{
+	height: 100vh;
 	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .wrapper{
 	display: inline-block;
+	background: rgba(255,255,255,0.2);
+	border-radius: 10px;
 }
 main .wrapper>div:nth-child(2){
 	margin-left: 2em;
 }
 main .wrapper>div:nth-child(3){
 	margin-left: 4em;
+}
+
+.key{
+	font-size: 22px;
+	width: 70px ;
+	height: 65px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: black;
+	border: none;
+	color: white;
+	border-radius: 6px;
+	box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.4);
+	font-family: Helvetica;
+	margin: 0 5px;
+}
+
+.key img{
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	left: 2px;
+	bottom: 2px;
+}
+.row{
+	margin: 16px;
+}
+.row .key{
+	argin: 0 10px;
+}
+.noImg{
+	border-radius: 50%;
 }

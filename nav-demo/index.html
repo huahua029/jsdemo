@@ -8,18 +8,37 @@
 <body>
 	<header></header>
 	<main>
-		<div id="x" class="wrapper"></div>
+		<div id="main" class="wrapper"></div>
 	</main>
 	<footer></footer>
 	<script>
-		var keys = {
-			0:['q','w','e','r','t','y','u','i','o','p'],
-			1:['a','s','d','f','g','h','j','k','l'],
-			2:['z','x','c','v','b','n','m'],
-			length:3
-		}
-		var hash = {
-			q: 'qq.com',
+		//１．初始化数据
+		
+		var hashA = init()
+		var keys = hashA['keys']
+		var hash = hashA['hash']
+		
+		//２．生成键盘
+		generateKeyboard(keys,hash)
+		//３．监听键盘
+		
+		listenToKeyborad(hash)
+		
+
+		//函数
+		function init(){
+			var keys = {
+				0:['q','w','e','r','t','y','u','i','o','p'],
+				1:['a','s','d','f','g','h','j','k','l'],
+				2:['z','x','c','v','b','n','m'],
+				length:3
+			}
+			var hash = {
+			q: 'qq.com',	
+			a: 'alibaba.com',
+			z: 'zhihu.com',
+
+			/*
 			w: 'weibo.com',
 			e: 'ele.me',
 			r: 'renren.com',
@@ -28,58 +47,96 @@
 			i: 'iqiyi.com',
 			o: 'opera.com',
 			p: 'undefined',
-			a: 'alibaba.com',
 			s: 'sohu.com',
-			z: 'zhihu.com',
 			m: 'www.mcdonalds.com,cn'
+			*/
+			}
+			//取出localStorage中对应的hash
+			var hashLocalStorage = getFromLocalStorage('hashSto')
+			if(hashLocalStorage){
+				hash = hashLocalStorage;
+			}
+			return{
+				'hash': hash,
+				'keys': keys
+			}
 		}
-		//取出localStorage中对应的hash
-		var hashLocalStorage = JSON.parse(localStorage.getItem('hashSto') || 'null');
-		if(hashLocalStorage){
-			hash = hashLocalStorage;
-		}
-		// 遍历keys生成kbd
+		function generateKeyboard(keys,hash){
+			// 遍历keys生成kbd
 		for(var index=0;index < keys.length;index++){
-			divWrap = document.createElement('div')
-			x.appendChild(divWrap)
+			var div = tag('div',{className:'row'})
+			main.appendChild(div)
 
 			
 			for(var i=0; i<keys[index].length;i++){
-				z = document.createElement('kbd')
-				z.textContent = keys[index][i]
-				divWrap.appendChild(z);
-
-				// 添加编辑功能
-				buttonX = document.createElement('button')
-				//添加id方便选中
-				buttonX.id = keys[index][i]
-				z.appendChild(buttonX);
-				buttonX.textContent = '编辑'
-
-				//点击更换
-				buttonX.onclick = function(xxxddd){
-				key = xxxddd.target.id
-				// 弹出对话框
-				site = prompt('给我一个网址')
-				hash[key] = site;	//hash变更
-				//存
-				localStorage.setItem('hashSto',JSON.stringify(hash));
+				var kbd = tag('kbd',{textContent:keys[index][i],className:'key'})				
+				var button = creatButton(keys[index][i])
+				var img = createImg(hash[keys[index][i]])
+				
+				div.appendChild(kbd)
+				kbd.appendChild(button)
+				kbd.appendChild(img)
+		
 				}
-			
 			}
 		}
-		//键盘添加事件
-		document.onkeypress = function(ddaadad){
-			key = ddaadad['key']	//拿到键
-
-			website = hash[key]		//取出网站
-
+		function listenToKeyborad(hash){
+			//键盘添加事件
+			document.onkeypress = function(e){
+			var key = e['key']	//拿到键
+			var website = hash[key]		//取出网站
 			//location.href = 'http://' + website　//当前页面打开
-			
 			window.open('http://'+website,'_blank')//新开页面
+			}
+		}
+		
+		//取出hash
+		function getFromLocalStorage(name){
+			return JSON.parse(localStorage.getItem(name) || 'null')
 		}
 
-		
+		function tag(tagName,attributes){
+
+			var element =  document.createElement(tagName)
+			for(var key in attributes){ //key为className，id...
+				element[key] = attributes[key]
+			}
+			return element
+		}
+		function creatButton(id){
+			var buttonX = tag('button')
+				//添加id方便选中
+				buttonX.id = id
+				buttonX.textContent = '编辑'
+				buttonX.onclick = function(e){
+					var key = e.target.id
+				// 弹出对话框
+					var site = prompt('给我一个网址')
+					hash[key] = site;	//hash变更
+
+				//更新图片
+					var img2 = e.target.previousSibling;
+					img2.src = "http://www." + site + "/favicon.ico"
+					img2.onerror = function(e){
+						e.className = 'noImg'
+					}
+
+				//存
+					localStorage.setItem('hashSto',JSON.stringify(hash));
+				}
+				return buttonX;
+
+		}
+		function createImg(domain){
+			//添加图片
+				var img = tag('img')
+				if (domain) {
+					img.src = 'http://www.' + domain + '/favicon.ico'
+				}else{
+					img.className = 'noImg'
+				}
+				return img;
+		}		
 	</script>
 </body>
 </html>
