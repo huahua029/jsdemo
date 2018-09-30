@@ -1,17 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>我的画板</title>
-  <link rel="stylesheet" type="text/css" href="./style.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>我的画板</title>
+	<link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
-  <canvas id="canvas"></canvas>
-  <div class="actions" id="actions">
-  <button id=eraser>橡皮擦</button>
-  <button id="brush">画笔</button>
-  </div>
-  <script type="text/javascript" src="./main.js"></script>
+	<canvas id="canvas" width=300 height=300></canvas>
+	<div class="actions" id="actions">
+		<svg id=pen class="active icon" aria-hidden="true">
+			<use xlink:href="#icon-pen2"></use>
+		</svg>
+		<svg id=eraser class="icon" aria-hidden="true">
+			<use xlink:href="#icon-eraser1"></use>
+		</svg>
+		<svg id=clear class="icon" aria-hidden="true">
+			<use xlink:href="#icon-clear"></use>
+		</svg>
+		<a id="down">
+			<svg class="icon" aria-hidden="true">
+				<use xlink:href="#icon-down"></use>
+			</svg>
+		</a>
+	</div>
+	<ol class="colors">
+		<li id=black class="black active"></li>
+		<li id=red class="red"></li>
+		<li id=green class="green"></li>
+		<li id=blue class="blue"></li>
+	</ol>
+	<ol class="sizes">
+		<li class="thin" id=thin></li>
+		<li class="wide" id=wide></li>
+	</ol>
+	<script type="text/javascript" src="./main.js"></script>
+	<script type="text/javascript" src="///at.alicdn.com/t/font_859808_6diw3trdkrd.js"></script>
 </body>
 </html>

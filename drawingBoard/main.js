@@ -10,13 +10,71 @@ var lastPoint = {
 
 /********/
 var eraserEnabled = false;
-eraser.onclick = function() {
-  eraserEnabled = true;
-  actions.className = 'actions x'
+pen.onclick = function() {
+  eraserEnabled = false
+  pen.classList.add('active')
+  eraser.classList.remove('active')
 }
-brush.onclick = function() {
-  eraserEnabled = false;
-  actions.className = 'actions'
+eraser.onclick = function() {
+  eraserEnabled = true
+  eraser.classList.add('active')
+  pen.classList.remove('active')
+}
+
+/*****更换画笔粗细*******/
+var lineWidth = 4;
+thin.onclick = function() {
+  lineWidth = 4;
+  thin.classList.add('active')
+  wide.classList.remove('active')
+}
+wide.onclick = function() {
+  lineWidth = 8;
+  wide.classList.add('active')
+  thin.classList.remove('active')
+}
+
+/**********更换颜色**********/
+black.onclick = function() {
+  ctx.fillStyle = 'black'
+  ctx.strokeStyle = 'black'
+  black.classList.add('active')
+  blue.classList.remove('active')
+  green.classList.remove('active')
+  red.classList.remove('active')
+}
+red.onclick = function() {
+  ctx.fillStyle = 'red'
+  ctx.strokeStyle = 'red'
+  red.classList.add('active')
+  black.classList.remove('active')
+  blue.classList.remove('active')
+  green.classList.remove('active')
+}
+green.onclick = function() {
+  ctx.fillStyle = 'green'
+  ctx.strokeStyle = 'green'
+  green.classList.add('active')
+  blue.classList.remove('active')
+  red.classList.remove('active')
+  black.classList.remove('active')
+}
+blue.onclick = function() {
+  ctx.fillStyle = 'blue'
+  ctx.strokeStyle = 'blue'
+  blue.classList.add('active')
+  red.classList.remove('active')
+  black.classList.remove('active')
+  green.classList.remove('active')
+}
+/*******删除*******/
+clear.onclick = function() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+}
+/*******保存*******/
+down.onclick = function() {
+  down.href = canvas.toDataURL()
+  down.download = "mypainting.png"
 }
 
 /********监听鼠标*********/
@@ -100,15 +158,13 @@ function listenToUser(canvas) {
 /*********监听canvas事件*********/
 function drawCircle(x, y) {
   ctx.beginPath(x, y);
-  ctx.fillStyle = 'black'
   ctx.arc(x, y, 1, 0, 2 * Math.PI);
   ctx.fill();
 }
 
 function drawLine(x1, y1, x2, y2) {
   ctx.beginPath();
-  ctx.strokeStyle = 'black'
-  ctx.lineWidth = 5;
+  ctx.lineWidth = lineWidth;
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
   ctx.stroke(); //问题
