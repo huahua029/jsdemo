@@ -1,0 +1,3 @@
+onmousedown
+onmousemove
+onmouseup
