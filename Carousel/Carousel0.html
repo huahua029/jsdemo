@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <style>
+    .images{
+      display:flex;
+      align-items:flex-start;
+      transition: all 0.5s;
+    }
+    .images > img{
+      
+    }
+    .window{
+      width: 300px;
+      overflow: hidden;
+    }
+	  .red{
+  		color: red;
+		}
+  </style>
+</head>
+
+<body>
+  <div class="window">
+    <div class='images'>
+      <img src="https://cdn1-www.dogtime.com/assets/uploads/2009/06/papillon.jpg" width='300px' alt="">
+      <img src="http://cdn.akc.org/content/article-body-image/papillonsmalldogs.jpg" width='300px' alt="">
+      <img src="https://cdn1-www.dogtime.com/assets/uploads/2009/06/papillon.jpg" width='300px' alt="">
+    </div>
+  </div>
+  <div id="buttons">
+    <button>第1张</button>
+    <button>第2张</button>
+    <button>第3张</button>
+  </div>
+	<script>
+$(p1).on('click',function(){
+  $('.images').css({
+    transform: 'translateX(0)'
+  })
+})
+$(p2).on('click',function(){
+  $('.images').css({
+    transform: 'translateX(-300px)'
+  })
+})
+$(p3).on('click',function(){
+  $('.images').css({
+    transform: 'translateX(-600px)'
+  })
+})
+	</script>
+</body>
+<!--升级版本，无限的图片都可以，添加自动播放-->
+</html>
