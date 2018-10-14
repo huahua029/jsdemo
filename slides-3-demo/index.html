@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>JS Bin</title>
+	<style>
+	.window{
+		width: 400px;
+		height: 300px;
+		position: relative;
+		border:1px solid red;
+		overflow: hidden;
+		margin:0 auto;
+	}
+	.window>img{
+		position: absolute;
+		width: 400px;
+		transition: all 1s;
+	}
+	.window>img.current{
+		z-index: 1;
+		transform: translateX(0);
+	}
+	.window>img.leave{
+		transform: translateX(-100%);
+	}
+	.window>img.enter{
+		transform: translateX(100%);
+	}
+
+</style>
+<script
+src="https://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="window">
+		<img src="https://topofthelist.net/wp-content/uploads/2016/01/Hydrangeas.jpg" width='400' alt="">
+		<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ-hZzXQ0D9HwXkLU-LkUnfAOKu6fXCBzKXNv1NNnZMJVh9n_GEA" width='400'alt="">
+		<img src="http://i103.photobucket.com/albums/m150/xbebexkissesx/Jennifer%20Lawrence/charliethread.png" width='400' alt="">
+	</div>
+	<script>
+		//轮播的思路就是分为三块区域，轮流展示。分为current leave enter区域，然后添加事件，反复运行即可
+		$('.window>img:nth-child(1)').addClass('current')
+		$('.window>img:nth-child(2)').addClass('enter')
+		$('.window>img:nth-child(3)').addClass('enter')
+		let n = 1;
+		setInterval(()=>{
+			$(`.window>img:nth-child(${x(n)})`).removeClass('current')
+			.addClass('leave')
+			.one('transitionend',(e)=>{
+				console.log(e)
+				$(e.currentTarget).removeClass('leave').addClass('enter')
+			})
+			$(`.window>img:nth-child(${x(n+1)})`).removeClass('enter').addClass('current')
+			n++
+		},3000)
+		function x(n){
+			if(n>3){
+				n = n%3
+				if(n === 0){
+					n = 3
+				}
+			}
+			return n
+		}
+	</script>
+</body>
+</html>
