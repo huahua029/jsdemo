@@ -1,0 +1,92 @@
+<!-- 第一个坑：如果阻止默认事件，这里的checkbox就无法选中，比如$(wrapper).on('click', false)-->
+<!-- 第二个坑：如果事件添加在一起，就直接，show然后hide -->
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+	<meta charset="utf-8">
+	<title>JS Bin</title>
+	<style>
+
+	.wrapper{
+		position: relative;
+		display: inline-block;
+	}
+	.popover{
+		border: 1px solid red;
+		position: absolute;
+		top: 0;
+		left: 100%;
+		white-space: nowrap;
+		padding: 10px;
+		margin-left: 10px;
+		background: white;
+		display: none;
+	}
+	.popover::before{
+		position: absolute;
+		content:'';
+		top: 5px;
+		right: 100%;
+
+		border: 10px solid transparent;
+		border-right-color: red;
+	}
+	.popover::after{
+		position: absolute;
+		content:'';
+		top: 5px;
+		right: 100%;
+
+		border: 10px solid transparent;
+		border-right-color: white;
+		margin-right: -1px;
+	}
+</style>
+</head>
+<body>
+	<div id='wrapper' class="wrapper">
+		<button id='clickMe'>点击</button>
+		<div id='popover' class="popover">
+			<input type="checkbox">浮层
+		</div>
+	</div>
+	<script>
+		//这样肯定是不行的～～～show完后，直接hide了
+		$(clickMe).on('click', function() {
+			$(popover).show()
+			console.log('show')
+			$(document).one('click', function(){
+				console.log('hide')
+				$(popover).hide()
+			})
+		})
+		//解决办法一：这样是可以的！直接阻止冒泡就行，不用通知它爸爸执行hide
+		/*
+		$(clickMe).on('click', function() {
+			$(popover).show()
+			$(document).one('click', function(){
+				$(popover).hide()
+			})
+		})
+
+		$(wrapper).on('click', function(e) {
+			e.stopPropagation()
+		})
+		// 只监听，这一次，就非常省内存了．用的one
+		//　点击，展示，添加一次监听事件
+		*/
+		//解决办法二：setTimeout
+		/*
+		$(clickMe).on('click', function() {
+			$(popover).show()
+			setTimeout(function() {
+				$(document).one('click', function() {
+					$(popover).hide()
+				})
+			}, 0)
+		})
+		*/
+	</script>
+</body>
+</html>
