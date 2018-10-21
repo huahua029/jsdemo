@@ -1,0 +1,61 @@
+<!-- 如果不考虑IE，这种方案是可行的，就是监听的事件越多，就有点占内存 -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>JS Bin</title>
+	<style>
+	.wrapper{
+		position: relative;
+		display: inline-block;
+	}
+	.popover{
+		border: 1px solid red;
+		position: absolute;
+		top: 0;
+		left: 100%;
+		white-space: nowrap;
+		padding: 10px;
+		margin-left: 10px;
+		background: white;
+		display: none;
+	}
+	.popover::before{
+		position: absolute;
+		content:'';
+		top: 5px;
+		right: 100%;
+		
+		border: 10px solid transparent;
+		border-right-color: red;
+	}
+	.popover::after{
+		position: absolute;
+		content:'';
+		top: 5px;
+		right: 100%;
+		
+		border: 10px solid transparent;
+		border-right-color: white;
+		margin-right: -1px;
+	}
+</style>
+</head>
+<body>
+	<div id='wrapper' class="wrapper">
+		<button id='clickMe'>点击</button>
+		<div id='popover' class="popover">浮层</div>
+	</div>
+	<script>
+		clickMe.addEventListener('click', function(e){
+			popover.style.display = 'block'
+		})
+		wrapper.addEventListener('click',function(e){
+			e.stopPropagation()
+		})
+		document.addEventListener('click', function(){
+			popover.style.display = 'none'
+		})
+	</script>
+</body>
+</html>
