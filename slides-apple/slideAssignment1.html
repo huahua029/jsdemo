@@ -2,76 +2,97 @@
 <html>
 
 <head>
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-  <meta charset="utf-8">
-  <title>JS Bin</title>
-  <style>
-  .window{
-    width: 600px; 
-    overflow: hidden;
-    position: relative;
-    margin: 0 auto;
-  }
-  .images{
-    display: flex;
-    align-items: flex-start;
-    transition: all 0.5s;
-  }
-  .images>img{
-    width: 600px;
-  }
-  svg.pointWrapper{
-    width: 100px;
-    height: 20px;
-    position: absolute;
-    bottom: 0;
-    left:30%;
-    text-align: center;
-  }
-  .pointWrapper>circle{
-    fill: #ccc;
-  }
-  .pointWrapper>circle.active{
-    fill: white;
-  }
+	<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>
+	<meta charset="utf-8">
+	<title>JS Bin</title>
+	<style>
+	.window{
+		width: 600px; 
+		overflow: hidden;
+		position: relative;
+		margin: 0 auto;
+	}
+	.images{
+		display: flex;
+		align-items: flex-start;
+		transition: all 0.5s;
+	}
+	.images>img{
+		width: 600px;
+	}
+	svg.pointWrapper{
+		width: 100px;
+		height: 20px;
+		position: absolute;
+		bottom: 0;
+		left:30%;
+		text-align: center;
+	}
+	.pointWrapper>circle{
+		fill: #ccc;
+	}
+	.pointWrapper>circle.active{
+		fill: white;
+	}
 </style>
 </head>
 
 <body>
-  <div class="window">
-    <div class="images">
-      <img src="https://www.apple.com/v/mac/home/ac/images/home/imac_pro_01_large.jpg" alt="">
-      <img src="https://www.apple.com/v/mac/home/ac/images/home/imac_pro_02_large.jpg" alt="">
-      <img src="https://www.apple.com/v/mac/home/ac/images/home/imac_pro_03_large.jpg" alt="">
-    </div>
-    <svg id='buttons' class="pointWrapper">
-      <circle cx="10" cy="10" r="5" class='active'/>
-      <circle cx="30" cy="10" r="5" />
-      <circle cx="50" cy="10" r="5" />
-    </svg>
-  </div>
-  <script>
-    let allButtons = $('svg>circle')
-    console.log(allButtons)
-    for (let i = 0; i < allButtons.length; i++) {
-      $(allButtons[i]).on('click', function(e) {
-        let index = $(e.currentTarget).index()
-        let n = index * -600
-        $('.images').css({
-          transform: `translateX(${n}px)`
-        })
+	<div class="window">
+		<div class="images">
+			<img src="https://www.apple.com/v/mac/home/ac/images/home/imac_pro_01_large.jpg" alt="">
+			<img src="https://www.apple.com/v/mac/home/ac/images/home/imac_pro_02_large.jpg" alt="">
+			<img src="https://www.apple.com/v/mac/home/ac/images/home/imac_pro_03_large.jpg" alt="">
+		</div>
+		<svg id='buttons' class="pointWrapper">
+			<circle cx="10" cy="10" r="5" class='active'/>
+			<circle cx="30" cy="10" r="5" />
+			<circle cx="50" cy="10" r="5" />
+		</svg>
+	</div>
+	<script>
+		let allButtons = $('svg>circle')
+		console.log(allButtons)
+		for (let i = 0; i < allButtons.length; i++) {
+			$(allButtons[i]).on('click', function(e) {
+				let index = $(e.currentTarget).index()
+				let n = index * -600
+				$('.images').css({
+					transform: `translateX(${n}px)`
+				})
 
-        $('.images').on('transitionend', function() {
-          allButtons.eq(index)
-          .addClass('active')
-          .siblings().removeClass('active')
-        })
-      })
-    }
-  </script>
+				$('.images').on('transitionend', function() {
+					allButtons.eq(index)
+					.addClass('active')
+					.siblings().removeClass('active')
+				})
+			})
+		}
+
+		var n=0
+		var size = allButtons.length
+		allButtons.eq(n%size).trigger('click')
+
+		var timerId = setTimer()
+
+		function setTimer(){
+			return setInterval(()=>{
+				n++
+				allButtons.eq(n%size).trigger('click')
+			},3000)
+		}
+
+		$('.window').on('mouseenter', function() {
+			window.clearInterval(timerId)
+		})
+
+		$('.window').on('mouseleave', function() {
+			timerId = setTimer()
+		})
+	</script>
 </body>
 
 </html>
