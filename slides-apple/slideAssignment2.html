@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <title>JS Bin</title>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    color: black;
+  }
+  .clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  body {
+    background: #fbfbfb;
+  }
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+  }
+  ul>li {
+    list-style: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d6d6d6;
+    transition: all 1s;
+  }
+  ul>li.active {
+    border-bottom: 1px solid black;
+  }
+  a {
+    text-decoration: none;
+    margin: 0 auto;
+    align-self: center;
+  }
+  a:hover {
+    color: #0070c9;
+    text-decoration: none;
+  }
+  .window {
+    margin: 0 30%;
+    position: relative;
+  }
+
+  .window>.images>img {
+    top: 26px;
+    left: 24px;
+    position: absolute;
+  }
+  .window>.images>img.active {
+    z-index: 1;
+  }
+</style>
+</head>
+
+<body>
+  <ul>
+    <li>
+      <a href="#">
+        <img src="https://www.apple.com/v/mac/home/ac/images/home/nav_icon_photos_large.jpg" alt="">
+        <br> Photos
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <img src="https://www.apple.com/v/mac/home/ac/images/home/nav_icon_imovie_large.jpg" alt="">
+        <br> iMovie
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <img src="https://www.apple.com/v/mac/home/ac/images/home/nav_icon_garageband_large.jpg" alt="">
+        <br> GarageBand
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <img src="https://www.apple.com/v/mac/home/ac/images/home/nav_icon_pages_large.jpg" alt="">
+        <br> Pages
+      </a>
+    </li>
+
+  </ul>
+  <!--主体-->
+  <div class="window">
+    <div class="large">
+      <img src="https://www.apple.com/v/mac/home/ac/images/home/bia_hw_large.png" alt="">
+    </div>
+    <div class="images">
+      <img src="https://www.apple.com/v/mac/home/ac/images/home/bia_photos_large.jpg" alt="">
+      <img src="https://www.apple.com/v/mac/home/ac/images/home/bia_imovie_large.jpg" alt="">
+      <img src="https://www.apple.com/v/mac/home/ac/images/home/bia_garageband_large.jpg" alt="">
+      <img src="https://www.apple.com/v/mac/home/ac/images/home/bia_pages_large.jpg" alt="">
+    </div>
+  </div>
+  <script>
+    var allAnchor = $('ul>li')
+    var allImages = $('.window>.images>img')
+
+    allImages.eq(0).addClass('active')
+    allAnchor.eq(0).addClass('active')
+
+    console.log(allImages)
+    for (let i = 0; i < allAnchor.length; i++) {
+      $(allAnchor[i]).on('click', function(e) {
+        let index = $(e.currentTarget).index()
+
+        allImages.eq(index).addClass('active')
+        .siblings().removeClass('active')
+
+        allAnchor.eq(index).addClass('active')
+        .siblings().removeClass('active')
+      })
+    }
+  </script>
+</body>
+
+</html>
