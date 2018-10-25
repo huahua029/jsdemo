@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <title>jsonp</title>
+</head>
+
+<body>
+    <h5>您的账户余额是 <span id=amount>{{amount}}</span></h5>
+    <button id=button>付钱</button>
+    <!-- 这算一种方法 -->
+    <!--
+    <form action="/pay" method="POST" target="result">
+        <input type="submit" value="付款">
+    </form>
+    <iframe name="result" src="about:blank" frameborder="0" height="200"></iframe>
+    -->
+    <script>
+        //这是第二种方法，试着用图片
+        //这种方法只能get,而且老他妈显示失败，给浏览器一个真图片把
+        /*
+        button.addEventListener('click', (e) => {
+            let image = document.createElement('img')
+            image.src = '/pay'
+            image.onload = function() {
+                alert('打钱成功')
+                    // window.location.reload()
+                amount.innerText = amount.innerText - 1
+            }
+            image.onerror = function() {
+                alert('打钱失败')
+            }
+        })
+        */
+
+        //这是第三种方法
+        //重要：：：JSONP的原生js写法
+        //来看script，这里script需要追加在body的最后
+        /*
+        button.addEventListener('click', (e) => {
+            let script = document.createElement('script')
+            let functionName = 'huahua' + parseInt(Math.random() * 100)
+            window[functionName] = function(result) {
+                if (result === 'success') {
+                    amount.innerText = amount.innerText - 1
+                }
+            }
+            script.src = 'http://zhen.com:8002/pay?callback=' + functionName
+            document.body.appendChild(script)
+            script.onload = function(e) {
+                e.currentTarget.remove()
+                delete window[functionName]
+            }
+            script.onerror = function(e) {
+                alert('fail')
+                e.currentTarget.remove()
+                delete window[functionName]
+            }
+        })
+        */
+
+        //这是第四种写法，JSONP的jQuery写法
+        button.addEventListener('click', (e) => {
+            $.ajax({
+                url: "http://127.0.0.1:8002/pay",
+                dataType: "jsonp",
+                success: function(response) {
+                    if (response === 'success') {
+                        amount.innerText = amount.innerText - 1
+                    }
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
