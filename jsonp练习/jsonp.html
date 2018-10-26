@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jsonp</title>
+</head>
+
+<body>
+    <button id=button>点击发起跨域请求</button>
+    <script>
+        button.addEventListener('click', () => {
+            let functionName = 'huahua' + parseInt(Math.random() * 10000)
+            window[functionName] = function(data) {
+                alert('这是一个本地函数，可以被跨域的remote.js文件调用，远程带来的数据是：' + '第一个人的名字是' + data.person[0].firstname + ' ' + data.person[0].lastname)
+            }
+            var script = document.createElement('script')
+            script.src = 'http://127.0.0.1:8888/remote.js?callback=' + functionName
+            document.body.appendChild(script)
+            script.onload = function(e) {
+                e.currentTarget.remove()
+            }
+        })
+    </script>
+</body>
+
+</html>
