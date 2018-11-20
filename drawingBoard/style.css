@@ -10,7 +10,7 @@ ul,ol{list-style: none;}
 body{
 	overflow: hidden;
 }
-#canvas{display:block;}
+#canvas{display:block;position: fixed;}
 
 .actions{
 	position:fixed;

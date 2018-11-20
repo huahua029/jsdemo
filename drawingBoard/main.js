@@ -104,7 +104,7 @@ function listenToUser(canvas) {
         return
       }
       if (eraserEnabled) {
-        ctx.clearRect(x - 5, y - 5, 10, 10)
+        ctx.clearRect(x - 5, y - 5, 20, 20)
       } else {
         var newPoint = {
           'x': x,
@@ -124,7 +124,7 @@ function listenToUser(canvas) {
       var y = e.clientY
       using = true
       if (eraserEnabled) {
-        ctx.clearRect(x - 5, y - 5, 10, 10)
+        ctx.clearRect(x - 5, y - 5, 20, 20)
       } else {
         lastPoint = {
           'x': x,
